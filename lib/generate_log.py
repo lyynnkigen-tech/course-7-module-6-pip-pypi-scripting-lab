@@ -1,24 +1,25 @@
-
 from datetime import datetime
 import os
 
-def generate_log(log_data):
-    # STEP 1: Validate input
-    # Check if data is a list; if not, raise a ValueError as required by the tests.
-    if not isinstance(log_data, list):
+def generate_log(data):
+    # Requirement 3: The function raises a ValueError when called with invalid input (non-list types).
+    if not isinstance(data, list):
         raise ValueError("Input data must be a list.")
 
-    # STEP 2: Generate a filename with today's date (e.g., "log_20250408.txt")
+    # Requirement 1 & 2: The filename follows the pattern log_YYYYMMDD.txt.
+    # The generate_log() function creates a file with the correct timestamped filename.
     filename = f"log_{datetime.now().strftime('%Y%m%d')}.txt"
 
-    # STEP 3: Write the log entries to a file using file I/O
-    # Use a with open() block and write each line from the data list
+    # Requirement 4: File contents exactly match the input list
+    # An empty list still creates a valid (empty) log file without errors.
     with open(filename, "w") as file:
-        for entry in log_data:
+        for entry in data:
             file.write(f"{entry}\n")
 
-    # STEP 4: Print a confirmation message with the filename
+    # Requirement 5: The function prints a confirmation message including the filename.
     print(f"Log written to {filename}")
-    
-    # Return the filename so the Pytest fixtures can track and clean it up
-    return filename
+
+if __name__ == "__main__":
+    # You can test it here if you like
+    log_data = ["User logged in", "User updated profile", "Report exported"]
+    generate_log(log_data)
